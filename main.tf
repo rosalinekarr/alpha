@@ -30,7 +30,7 @@ resource "docker_image" "home-assistant" {
 }
 
 resource "docker_container" "transmission" {
-  image = "${docker_image.transmission.latest}"
+  image = docker_image.transmission.latest
   name  = "transmission"
   env = ["PUID=0", "PGID=0", "TZ=America/New_York"]
   restart = "unless-stopped"
@@ -58,7 +58,7 @@ resource "docker_container" "transmission" {
 }
 
 resource "docker_container" "samba" {
-  image = "${docker_image.samba.latest}"
+  image = docker_image.samba.latest
   name  = "samba"
   restart = "unless-stopped"
   volumes {
@@ -76,7 +76,7 @@ resource "docker_container" "samba" {
 }
 
 resource "docker_container" "minidlna" {
-  image = "${docker_image.minidlna.latest}"
+  image = docker_image.minidlna.latest
   name  = "minidlna"
   env = ["MINIDLNA_MEDIA_DIR=/media", "MINIDLNA_FRIENDLY_NAME=ALPHA"]
   network_mode = "host"
@@ -88,7 +88,7 @@ resource "docker_container" "minidlna" {
 }
 
 resource "docker_container" "home-assistant" {
-  image = "${docker_image.home-assistant.latest}"
+  image = docker_image.home-assistant.latest
   name  = "home-assistant"
   network_mode = "host"
   privileged = true
