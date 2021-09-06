@@ -29,6 +29,11 @@ resource "docker_image" "home-assistant" {
   keep_locally = false
 }
 
+resource "docker_image" "rhasspy" {
+  name         = "rhasspy/rhasspy"
+  keep_locally = false
+}
+
 resource "docker_container" "transmission" {
   image = docker_image.transmission.latest
   name  = "transmission"
@@ -102,5 +107,25 @@ resource "docker_container" "home-assistant" {
   volumes {
     host_path = "/root/config/homeassistant"
     container_path = "/config"
+  }
+}
+
+resource "docker_container" "rhasspy" {
+  image = docker_image.rhasspy.latest
+  name  = "rhasspy"
+  command = ["--user-profiles", "/profiles", "--profile", "en"]
+  restart = "unless-stopped"
+  ports {
+    internal = 12101
+    external = 12101
+  }
+  volumes {
+    host_path = "/etc/localtime"
+    container_path = "/etc/localtime"
+    read_only = true
+  }
+  volumes {
+    host_path = "/root/config/rhasspy/profiles"
+    container_path = "/profiles"
   }
 }
