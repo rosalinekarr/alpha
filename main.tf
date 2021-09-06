@@ -32,7 +32,7 @@ resource "docker_image" "home-assistant" {
 resource "docker_container" "transmission" {
   image = "${docker_image.transmission.latest}"
   name  = "transmission"
-  env = ["PUID=0", "PGID=0", "TZ=America/New_York", "USER=rosalinekarr", "PASS=wat77ghbW7EHW4abPmhHDYxQAEU3MtpPMWtZDMFWEmHBkMUcXrwFrYq8j8KaghazQUsAYZcdskRwCyupZz7L99q62LMrnLWB3vmV"]
+  env = ["PUID=0", "PGID=0", "TZ=America/New_York"]
   restart = "unless-stopped"
   volumes {
     host_path = "/root/config/transmission"
@@ -60,7 +60,6 @@ resource "docker_container" "transmission" {
 resource "docker_container" "samba" {
   image = "${docker_image.samba.latest}"
   name  = "samba"
-  command = ["-p", "-u", "rosalinekarr;pc4gUAhiKEhiiXEExv9kpTPxmdQGXZBfji4u422JNfbcMk3gXdkJWCRmY6eZDhcHDfvUbowru6QRs9YyjwEvQaa3bDpZcs2Kz2GD", "-s", "alpha;/alpha;yes;no;no"]
   restart = "unless-stopped"
   volumes {
     host_path = "/media/barracuda"
